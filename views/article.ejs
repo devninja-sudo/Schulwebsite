@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= article.title %> - <%= content.siteName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><%= content.siteName %></h1>
+      <p><%= content.description %></p>
+    </div>
+  </header>
+  
+  <nav>
+    <div class="container">
+      <a href="/">Startseite</a>
+      <a href="/admin">Admin</a>
+    </div>
+  </nav>
+  
+  <main>
+    <div class="container">
+      <div class="article-detail">
+        <h2><%= article.title %></h2>
+        <div class="date"><%= article.date %></div>
+        
+        <% if (article.image) { %>
+          <img src="<%= article.image %>" alt="<%= article.title %>">
+        <% } %>
+        
+        <div class="content">
+          <%= article.content %>
+        </div>
+        
+        <a href="/" class="btn">← Zurück zur Startseite</a>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 <%= content.siteName %>. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+</body>
+</html>

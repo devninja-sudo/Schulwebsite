@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - <%= content.siteName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .edit-form {
+      display: none;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border: 2px solid #228B22;
+    }
+    .edit-form.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><%= content.siteName %></h1>
+      <p><%= content.description %></p>
+    </div>
+  </header>
+  
+  <nav>
+    <div class="container">
+      <a href="/">Startseite</a>
+      <a href="/admin">Admin</a>
+    </div>
+  </nav>
+  
+  <main>
+    <div class="container">
+      <div class="admin-section">
+        <h2>Website Verwaltung</h2>
+        
+        <!-- Site Information Edit -->
+        <h3>Website Informationen bearbeiten</h3>
+        <form action="/admin/update-site" method="POST">
+          <div class="form-group">
+            <label for="siteName">Website Name:</label>
+            <input type="text" id="siteName" name="siteName" value="<%= content.siteName %>" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="welcomeText">Willkommenstext:</label>
+            <input type="text" id="welcomeText" name="welcomeText" value="<%= content.welcomeText %>" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="description">Beschreibung:</label>
+            <textarea id="description" name="description" required><%= content.description %></textarea>
+          </div>
+          
+          <button type="submit" class="btn">Speichern</button>
+        </form>
+      </div>
+      
+      <div class="admin-section">
+        <h2>Artikel Verwaltung</h2>
+        
+        <!-- Add New Article -->
+        <h3>Neuen Artikel hinzufügen</h3>
+        <form action="/admin/add-article" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="newTitle">Titel:</label>
+            <input type="text" id="newTitle" name="title" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="newContent">Inhalt:</label>
+            <textarea id="newContent" name="content" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label for="newImage">Bild hochladen (optional):</label>
+            <input type="file" id="newImage" name="image" accept="image/*">
+          </div>
+          
+          <button type="submit" class="btn">Artikel hinzufügen</button>
+        </form>
+      </div>
+      
+      <div class="admin-section">
+        <h2>Bestehende Artikel</h2>
+        <div class="article-list">
+          <% content.articles.forEach(article => { %>
+            <div class="article-item">
+              <h4><%= article.title %></h4>
+              <div class="date"><%= article.date %></div>
+              <p><%= article.content.substring(0, 100) %>...</p>
+              <% if (article.image) { %>
+                <p><strong>Bild:</strong> <%= article.image %></p>
+              <% } %>
+              
+              <div class="actions">
+                <button class="btn" onclick="toggleEdit(<%= article.id %>)">Bearbeiten</button>
+                <form action="/admin/delete-article/<%= article.id %>" method="POST" style="display: inline;" onsubmit="return confirm('Sind Sie sicher, dass Sie diesen Artikel löschen möchten?');">
+                  <button type="submit" class="btn btn-danger">Löschen</button>
+                </form>
+              </div>
+              
+              <!-- Edit Form (hidden by default) -->
+              <div id="edit-form-<%= article.id %>" class="edit-form">
+                <h4>Artikel bearbeiten</h4>
+                <form action="/admin/edit-article/<%= article.id %>" method="POST" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label for="editTitle<%= article.id %>">Titel:</label>
+                    <input type="text" id="editTitle<%= article.id %>" name="title" value="<%= article.title %>" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="editContent<%= article.id %>">Inhalt:</label>
+                    <textarea id="editContent<%= article.id %>" name="content" required><%= article.content %></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="editImage<%= article.id %>">Neues Bild hochladen (optional):</label>
+                    <input type="file" id="editImage<%= article.id %>" name="image" accept="image/*">
+                    <% if (article.image) { %>
+                      <p><small>Aktuelles Bild: <%= article.image %></small></p>
+                    <% } %>
+                  </div>
+                  
+                  <button type="submit" class="btn">Änderungen speichern</button>
+                  <button type="button" class="btn btn-secondary" onclick="toggleEdit(<%= article.id %>)">Abbrechen</button>
+                </form>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 <%= content.siteName %>. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+  
+  <script>
+    function toggleEdit(articleId) {
+      const form = document.getElementById('edit-form-' + articleId);
+      form.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>

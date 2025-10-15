@@ -1,0 +1,21 @@
+{
+  "siteName": "Schulwebsite",
+  "welcomeText": "Willkommen auf unserer Schulwebsite",
+  "description": "Hier finden Sie alle wichtigen Informationen über unsere Schule.",
+  "articles": [
+    {
+      "id": 1,
+      "title": "Unsere Schule",
+      "content": "Unsere Schule bietet eine exzellente Ausbildung in einer freundlichen und unterstützenden Umgebung. Wir legen großen Wert auf die individuelle Förderung jedes einzelnen Schülers.",
+      "image": "",
+      "date": "2025-01-15"
+    },
+    {
+      "id": 2,
+      "title": "Veranstaltungen",
+      "content": "Bleiben Sie auf dem Laufenden über alle kommenden Schulveranstaltungen, Elternabende und besondere Aktivitäten.",
+      "image": "",
+      "date": "2025-01-10"
+    }
+  ]
+}

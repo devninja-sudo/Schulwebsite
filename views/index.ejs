@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= content.siteName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><%= content.siteName %></h1>
+      <p><%= content.description %></p>
+    </div>
+  </header>
+  
+  <nav>
+    <div class="container">
+      <a href="/">Startseite</a>
+      <a href="/admin">Admin</a>
+    </div>
+  </nav>
+  
+  <main>
+    <div class="container">
+      <div class="welcome-section">
+        <h2><%= content.welcomeText %></h2>
+      </div>
+      
+      <h2 style="color: #228B22; margin-bottom: 1rem;">Aktuelle Artikel</h2>
+      <div class="articles-grid">
+        <% content.articles.forEach(article => { %>
+          <div class="article-card">
+            <% if (article.image) { %>
+              <img src="<%= article.image %>" alt="<%= article.title %>">
+            <% } %>
+            <div class="article-card-content">
+              <h3><%= article.title %></h3>
+              <div class="date"><%= article.date %></div>
+              <p><%= article.content.substring(0, 150) %>...</p>
+              <a href="/article/<%= article.id %>">Weiterlesen →</a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </main>
+  
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 <%= content.siteName %>. Alle Rechte vorbehalten.</p>
+    </div>
+  </footer>
+</body>
+</html>
